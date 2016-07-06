@@ -252,6 +252,13 @@
                     self.user = data.userAuthentication.details.name;
                     console.log(data);
                     self.authenticated = true;
+
+                    $http.get("/test").success(function(resp){
+                        console.log(resp);
+                    }).error(function(e){
+                        console.log(e);
+                    })
+
                 }).error(function() {
                     self.user = "N/A";
                     self.authenticated = false;

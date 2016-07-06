@@ -36,6 +36,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootApplication
 @RestController
@@ -44,6 +46,8 @@ public class Application extends WebSecurityConfigurerAdapter {
 
     @Autowired
     OAuth2ClientContext oauth2ClientContext;
+
+    private Map<String, Principal> userMap = new HashMap<>();
 
 
 
@@ -120,13 +124,14 @@ public class Application extends WebSecurityConfigurerAdapter {
 
     @RequestMapping("/user")
     public Principal user(Principal principal) {
+        userMap.putIfAbsent(principal.getName(), principal);
         return principal;
     }
 
 
     @RequestMapping("/test")
     public String test(){
-        FacebookService facebookService = new FacebookService();
+        FacebookService facebookService = new FacebookService(facebook());
         return facebookService.getUser().getEmail();
     }
 
