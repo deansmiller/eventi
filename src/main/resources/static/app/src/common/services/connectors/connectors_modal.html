@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h3 class="modal-title">Connect an Application</h3>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-xs-3 col-md-3" ng-repeat="connector in connectors">
+            <a href="#" class="thumbnail connector-logo" ng-click="addConnector(connector)">
+                <img ng-src="{{connector.logo}}" alt="blah">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$close()">Done</button>
+</div>
