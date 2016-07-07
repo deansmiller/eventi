@@ -7,7 +7,7 @@
 
     angular.module('Eventi.Services.Connectors', ["ui.bootstrap"])
 
-        .service("ConnectorsService", ["$uibModal", "$http", function ($uibModal, $http) {
+        .service("ConnectorsService", ["$uibModal", "$http", "$location", function ($uibModal, $http, $location) {
 
             getExistingConnections();
 
@@ -33,27 +33,30 @@
 
             function addConnector(connector){
                 console.log("Added:", connector);
-                location.href = "login/facebook";
+                $http.get("/test").success(function(response){
+                    location.href = response.loginUrl; // angular $location?
+                }).error(function(e){
+                    console.log(e);
+                });
+
 
 
             }
 
             function getExistingConnections(){
-                $http.get("/user").success(function(data) {
-                    self.user = data.userAuthentication.details.name;
-                    console.log(data);
-                    self.authenticated = true;
+                var len = location.search.length;
 
-                    $http.get("/test").success(function(resp){
-                        console.log(resp);
-                    }).error(function(e){
-                        console.log(e);
-                    })
+                console.log(location.search.substring(6, len));
 
-                }).error(function() {
-                    self.user = "N/A";
-                    self.authenticated = false;
-                });
+                //$http.get("/user").success(function(data) {
+                //    self.user = data.userAuthentication.details.name;
+                //    console.log(data);
+                //    self.authenticated = true;
+                //
+                //}).error(function() {
+                //    self.user = "N/A";
+                //    self.authenticated = false;
+                //});
             }
 
 
